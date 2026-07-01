@@ -23,23 +23,11 @@ const securityHeaders = [
   },
   {
     key: "Permissions-Policy",
-    value: "camera=(), microphone=(), geolocation=(self), interest-cohort=()",
+    value: "camera=(), microphone=(), geolocation=(self)",
   },
 ];
 
 const nextConfig: NextConfig = {
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-  typescript: {
-    ignoreBuildErrors: true,
-  },
-  images: {
-    remotePatterns: [],
-  },
-  experimental: {
-    webpackBuildWorker: false,
-  },
   async headers() {
     return [
       {
@@ -47,6 +35,9 @@ const nextConfig: NextConfig = {
         headers: securityHeaders,
       },
     ];
+  },
+  images: {
+    remotePatterns: [],
   },
 };
 

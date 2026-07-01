@@ -45,29 +45,29 @@ export function Modal({
   return (
     <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4">
       <div
-        className="absolute inset-0 bg-black/40 backdrop-blur-sm"
+        className="absolute inset-0 bg-black/30 backdrop-blur-sm"
         onClick={onClose}
       />
       <div
         className={cn(
-          "relative w-full bg-white shadow-xl z-10",
-          "rounded-t-2xl sm:rounded-2xl",
+          "relative w-full bg-white shadow-modal z-10",
+          "rounded-t-lg sm:rounded-lg",
           "max-h-[90vh] overflow-hidden flex flex-col",
           sizeClasses[size]
         )}
       >
-        <div className="flex items-center justify-between p-6 border-b border-gray-100 shrink-0">
-          <h2 className="text-xl font-semibold text-gray-900">{title}</h2>
+        <div className="flex items-center justify-between px-5 py-4 border-b border-gray-200 shrink-0">
+          <h2 className="text-base font-semibold text-gray-900">{title}</h2>
           <button
             onClick={onClose}
-            className="p-2 rounded-xl text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors"
+            className="p-1.5 rounded-md text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors"
           >
-            <X className="h-5 w-5" />
+            <X className="h-4 w-4" />
           </button>
         </div>
-        <div className="overflow-y-auto flex-1 p-6">{children}</div>
+        <div className="overflow-y-auto flex-1 px-5 py-4">{children}</div>
         {footer && (
-          <div className="p-6 border-t border-gray-100 shrink-0 bg-gray-50">
+          <div className="px-5 py-4 border-t border-gray-200 shrink-0 bg-gray-50">
             {footer}
           </div>
         )}
@@ -104,7 +104,7 @@ export function ConfirmModal({
       title={title}
       size="sm"
       footer={
-        <div className="flex gap-3 justify-end">
+        <div className="flex gap-2 justify-end">
           <Button variant="secondary" onClick={onClose} disabled={loading}>
             Cancelar
           </Button>
@@ -114,7 +114,8 @@ export function ConfirmModal({
         </div>
       }
     >
-      <p className="text-gray-600">{description}</p>
+      <p className="text-sm text-gray-600">{description}
+      </p>
     </Modal>
   );
 }

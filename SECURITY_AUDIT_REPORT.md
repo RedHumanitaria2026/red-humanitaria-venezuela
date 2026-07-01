@@ -128,7 +128,8 @@ PostgREST parameteriza internamente los valores antes de enviarlos a PostgreSQL.
 | 12 | Supabase | Creadas policies de ownership en `donaciones`, `alojamientos`, `solicitudes_ayuda` (INSERT con `donante_id`/`anfitriion_id`/`solicitante_id` validado) |
 
 **Commit de código:** `37b2489 — Security hardening: headers, open redirect fix, validation limits`
-**Cambios Supabase:** Aplicados directamente en SQL Editor (no versionados en schema.sql — pendiente actualización).
+**Commit de schema y reporte:** `3819366 — Security: fix IDOR RLS policies, update schema and audit report`
+**Cambios Supabase:** Aplicados directamente en SQL Editor y actualizados en `supabase/schema.sql`.
 
 ---
 

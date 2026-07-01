@@ -142,7 +142,7 @@ export default function VoluntariosPage() {
           {voluntariosFiltrados.map((voluntario) => (
             <div
               key={voluntario.id}
-              className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 space-y-3"
+              className="bg-white rounded-lg border border-gray-200 shadow-card p-5 space-y-3"
             >
               <div className="flex items-start justify-between gap-3">
                 <div>
@@ -165,19 +165,19 @@ export default function VoluntariosPage() {
                   </div>
                 )}
                 {voluntario.puede_transportar && (
-                  <div className="flex items-center gap-1 text-xs bg-orange-50 text-orange-700 px-2 py-1 rounded-lg">
+                  <div className="flex items-center gap-1 text-xs bg-warning-50 text-warning-700 px-2 py-1 rounded-lg">
                     <Car className="h-3 w-3" />
                     Transporte
                   </div>
                 )}
                 {voluntario.puede_cocinar && (
-                  <div className="flex items-center gap-1 text-xs bg-green-50 text-green-700 px-2 py-1 rounded-lg">
+                  <div className="flex items-center gap-1 text-xs bg-success-50 text-success-700 px-2 py-1 rounded-lg">
                     <Utensils className="h-3 w-3" />
                     Cocina
                   </div>
                 )}
                 {voluntario.puede_asistir_medicamente && (
-                  <div className="flex items-center gap-1 text-xs bg-red-50 text-red-700 px-2 py-1 rounded-lg">
+                  <div className="flex items-center gap-1 text-xs bg-danger-50 text-danger-700 px-2 py-1 rounded-lg">
                     <Stethoscope className="h-3 w-3" />
                     Médico
                   </div>
@@ -210,8 +210,8 @@ export default function VoluntariosPage() {
         size="lg"
       >
         {errorForm && (
-          <div className="mb-4 rounded-xl bg-red-50 border border-red-200 px-4 py-3">
-            <p className="text-sm text-red-700">{errorForm}</p>
+          <div className="mb-4 rounded-lg bg-danger-50 border border-danger-100 px-3 py-2.5">
+            <p className="text-sm text-danger-700">{errorForm}</p>
           </div>
         )}
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">

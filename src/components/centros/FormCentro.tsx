@@ -46,7 +46,7 @@ export function FormCentro({ centroExistente, onSubmit, onCancel }: FormCentroPr
           observaciones: centroExistente.observaciones || "",
           latitud: centroExistente.latitud,
           longitud: centroExistente.longitud,
-          ubicacion_url: centroExistente.ubicacion_url,
+          ubicacion_url: centroExistente.ubicacion_url ?? undefined,
         }
       : {
           estado: "activo",
@@ -54,7 +54,6 @@ export function FormCentro({ centroExistente, onSubmit, onCancel }: FormCentroPr
           capacidad_maxima: 0,
           latitud: null,
           longitud: null,
-          ubicacion_url: null,
         },
   });
 
@@ -107,7 +106,7 @@ export function FormCentro({ centroExistente, onSubmit, onCancel }: FormCentroPr
         onChange={(val) => {
           setValue("latitud", val?.latitud ?? null);
           setValue("longitud", val?.longitud ?? null);
-          setValue("ubicacion_url", val?.ubicacion_url ?? null);
+          setValue("ubicacion_url", val?.ubicacion_url);
         }}
       />
 

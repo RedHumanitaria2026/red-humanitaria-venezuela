@@ -11,7 +11,6 @@ import { registroSchema, type RegistroFormValues } from "@/validations/auth";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Select } from "@/components/ui/Select";
-import { Card } from "@/components/ui/Card";
 
 const opcionesRol = [
   { value: "voluntario", label: "Voluntario/a" },
@@ -125,31 +124,28 @@ export default function RegistroPage() {
 
   if (registrado) {
     return (
-      <Card>
-        <div className="text-center py-4">
-          <div className="text-5xl mb-4">&#x2705;</div>
-          <h2 className="text-xl font-semibold text-gray-900 mb-2">
-            Cuenta creada
-          </h2>
-          <p className="text-gray-500 mb-2">
-            Revisa tu email para confirmar tu cuenta.
-          </p>
-          <p className="text-sm text-gray-400 mb-6">
-            Si no ves el email, revisa la carpeta de spam.
-          </p>
-          <Link href="/login">
-            <Button fullWidth>Ir al inicio de sesion</Button>
-          </Link>
-        </div>
-      </Card>
+      <div className="text-center py-4">
+        <div className="text-5xl mb-4">&#x2705;</div>
+        <h2 className="text-xl font-semibold text-gray-900 mb-2">
+          Cuenta creada
+        </h2>
+        <p className="text-sm text-gray-500 mb-2">
+          Revisa tu email para confirmar tu cuenta.
+        </p>
+        <p className="text-xs text-gray-400 mb-6">
+          Si no ves el email, revisa la carpeta de spam.
+        </p>
+        <Link href="/login">
+          <Button fullWidth>Ir al inicio de sesion</Button>
+        </Link>
+      </div>
     );
   }
 
   return (
-    <Card>
-      <h2 className="text-xl font-semibold text-gray-900 mb-6">
-        Crear cuenta
-      </h2>
+    <div>
+      <h1 className="text-2xl font-bold text-gray-900 mb-1">Crear cuenta</h1>
+      <p className="text-sm text-gray-500 mb-7">Completá tus datos para registrarte</p>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <Input
@@ -219,8 +215,8 @@ export default function RegistroPage() {
         />
 
         {errorServidor && (
-          <div className="rounded-xl bg-red-50 border border-red-200 px-4 py-3">
-            <p className="text-sm text-red-700">{errorServidor}</p>
+          <div className="rounded-lg bg-danger-50 border border-danger-100 px-3 py-2.5">
+            <p className="text-sm text-danger-700">{errorServidor}</p>
           </div>
         )}
 
@@ -235,14 +231,14 @@ export default function RegistroPage() {
       </form>
 
       <p className="text-center text-sm text-gray-500 mt-6">
-        Ya tenes cuenta?{" "}
+        ¿Ya tenés cuenta?{" "}
         <Link
           href="/login"
           className="font-medium text-primary-600 hover:text-primary-700"
         >
-          Iniciar sesion
+          Iniciar sesión
         </Link>
       </p>
-    </Card>
+    </div>
   );
 }

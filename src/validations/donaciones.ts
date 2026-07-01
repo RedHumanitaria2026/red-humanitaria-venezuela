@@ -18,7 +18,7 @@ export const donacionSchema = z.object({
   observaciones: z.string().max(1000).optional(),
   latitud: z.number().min(-90).max(90).optional().nullable(),
   longitud: z.number().min(-180).max(180).optional().nullable(),
-  ubicacion_url: z.string().url("URL inválida").max(500).optional().nullable(),
+  ubicacion_url: z.string().url().optional().nullable(),
 });
 
 export type DonacionFormValues = z.infer<typeof donacionSchema>;

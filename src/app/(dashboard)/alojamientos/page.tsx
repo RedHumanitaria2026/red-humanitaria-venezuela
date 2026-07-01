@@ -257,11 +257,11 @@ export default function AlojamientosPage() {
       </div>
 
       {familias.length > 0 && (
-        <Card className="border-orange-200 bg-orange-50">
+        <Card className="border-warning-200 bg-warning-50">
           <CardHeader title={familias.length + " familia" + (familias.length !== 1 ? "s" : "") + " buscando alojamiento"} />
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {familias.slice(0, 4).map((familia) => (
-              <div key={familia.id} className="bg-white rounded-xl p-3 border border-orange-100">
+              <div key={familia.id} className="bg-white rounded-lg p-3 border border-warning-100">
                 <p className="text-sm font-medium text-gray-900">{familia.nombre_contacto}</p>
                 <div className="flex gap-2 mt-1 text-xs text-gray-500 flex-wrap">
                   <span>{familia.cantidad_personas} persona{familia.cantidad_personas !== 1 ? "s" : ""}</span>
@@ -305,7 +305,7 @@ export default function AlojamientosPage() {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
           {filtrados.map((aloj) => (
-            <div key={aloj.id} className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 space-y-3">
+            <div key={aloj.id} className="bg-white rounded-lg border border-gray-200 shadow-card p-5 space-y-3">
               <div className="flex items-start justify-between gap-3">
                 <div>
                   <p className="font-semibold text-gray-900">{etiquetaTipo[aloj.tipo] || aloj.tipo}</p>
@@ -326,7 +326,7 @@ export default function AlojamientosPage() {
                   </span>
                 )}
                 {aloj.tiene_electricidad && (
-                  <span className="flex items-center gap-1 text-xs bg-yellow-50 text-yellow-700 px-2 py-1 rounded-lg">
+                  <span className="flex items-center gap-1 text-xs bg-warning-50 text-warning-700 px-2 py-1 rounded-lg">
                     <Zap className="h-3 w-3" />Luz
                   </span>
                 )}
@@ -341,7 +341,7 @@ export default function AlojamientosPage() {
                   </span>
                 )}
                 {aloj.acepta_mascotas && (
-                  <span className="flex items-center gap-1 text-xs bg-green-50 text-green-700 px-2 py-1 rounded-lg">
+                  <span className="flex items-center gap-1 text-xs bg-success-50 text-success-700 px-2 py-1 rounded-lg">
                     <PawPrint className="h-3 w-3" />Mascotas
                   </span>
                 )}
@@ -363,7 +363,7 @@ export default function AlojamientosPage() {
                   href={"https://wa.me/?text=" + generarMensajeAlojamiento(aloj)}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-1.5 text-sm text-green-600 hover:text-green-700 font-medium"
+                  className="flex items-center gap-1.5 text-sm text-success-600 hover:text-success-700 font-medium"
                 >
                   <Share2 className="h-3.5 w-3.5" />
                   Compartir
@@ -390,8 +390,8 @@ export default function AlojamientosPage() {
 
       <Modal open={modalAlojamiento} onClose={() => setModalAlojamiento(false)} title="Ofrecer espacio" size="lg">
         {errorForm && (
-          <div className="mb-4 rounded-xl bg-red-50 border border-red-200 px-4 py-3">
-            <p className="text-sm text-red-700">{errorForm}</p>
+          <div className="mb-4 rounded-lg bg-danger-50 border border-danger-100 px-3 py-2.5">
+            <p className="text-sm text-danger-700">{errorForm}</p>
           </div>
         )}
         <form onSubmit={formAlojamiento.handleSubmit(onSubmitAlojamiento)} className="space-y-4">
@@ -468,8 +468,8 @@ export default function AlojamientosPage() {
 
       <Modal open={modalFamilia} onClose={() => setModalFamilia(false)} title="Solicitar alojamiento" size="md">
         {errorForm && (
-          <div className="mb-4 rounded-xl bg-red-50 border border-red-200 px-4 py-3">
-            <p className="text-sm text-red-700">{errorForm}</p>
+          <div className="mb-4 rounded-lg bg-danger-50 border border-danger-100 px-3 py-2.5">
+            <p className="text-sm text-danger-700">{errorForm}</p>
           </div>
         )}
         <form onSubmit={formFamilia.handleSubmit(onSubmitFamilia)} className="space-y-4">

@@ -33,3 +33,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# temp build scripts
+run_build.bat
+build_output.txt
+commit_security2.bat
+security_commit.ps1
+*.fuse_hidden*

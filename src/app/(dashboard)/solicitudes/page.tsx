@@ -221,14 +221,14 @@ export default function SolicitudesPage() {
             {solicitudes.filter((s) => s.estado === "pendiente").length} pendiente
             {solicitudes.filter((s) => s.estado === "pendiente").length !== 1 ? "s" : ""}
             {urgentesActivas > 0 && (
-              <span className="ml-2 text-red-600 font-medium">· {urgentesActivas} urgente{urgentesActivas !== 1 ? "s" : ""}</span>
+              <span className="ml-2 text-danger-600 font-medium">· {urgentesActivas} urgente{urgentesActivas !== 1 ? "s" : ""}</span>
             )}
           </p>
         </div>
         <div className="flex gap-2 flex-wrap">
           <button
             onClick={() => abrirModal("critica")}
-            className="flex items-center gap-2 px-4 py-2.5 bg-red-600 hover:bg-red-700 active:bg-red-800 text-white font-semibold rounded-xl shadow-sm transition-colors text-sm"
+            className="flex items-center gap-2 px-4 py-2.5 bg-danger-500 hover:bg-danger-600 active:bg-danger-700 text-white font-semibold rounded-lg shadow-sm transition-colors text-sm"
           >
             <AlertTriangle className="h-4 w-4" />
             Necesito ayuda
@@ -286,16 +286,16 @@ export default function SolicitudesPage() {
             return (
               <div
                 key={sol.id}
-                className={`bg-white rounded-2xl border shadow-sm overflow-hidden ${
+                className={`bg-white rounded-lg border shadow-sm overflow-hidden ${
                   esCritica
-                    ? "border-red-300 shadow-red-100"
+                    ? "border-danger-300 shadow-none"
                     : esAlta
-                    ? "border-orange-200"
+                    ? "border-warning-200"
                     : "border-gray-100"
                 }`}
               >
                 {esCritica && (
-                  <div className="flex items-center gap-2 px-5 py-2 bg-red-600 text-white text-sm font-medium">
+                  <div className="flex items-center gap-2 px-5 py-2 bg-danger-500 text-white text-sm font-medium">
                     <span className="relative flex h-2 w-2">
                       <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75" />
                       <span className="relative inline-flex rounded-full h-2 w-2 bg-white" />
@@ -304,7 +304,7 @@ export default function SolicitudesPage() {
                   </div>
                 )}
                 {esAlta && (
-                  <div className="flex items-center gap-2 px-5 py-2 bg-orange-500 text-white text-sm font-medium">
+                  <div className="flex items-center gap-2 px-5 py-2 bg-warning-500 text-white text-sm font-medium">
                     <AlertTriangle className="h-3.5 w-3.5" />
                     Alta urgencia
                   </div>
@@ -345,7 +345,7 @@ export default function SolicitudesPage() {
                           href={`https://wa.me/?text=${generarMensajeWhatsApp(sol)}`}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="flex items-center gap-1.5 text-sm text-green-600 hover:text-green-700 font-medium py-1"
+                          className="flex items-center gap-1.5 text-sm text-success-600 hover:text-success-700 font-medium py-1"
                         >
                           <Share2 className="h-3.5 w-3.5" />
                           Compartir
@@ -371,8 +371,8 @@ export default function SolicitudesPage() {
 
       <Modal open={modalAbierto} onClose={() => setModalAbierto(false)} title="Registrar solicitud de ayuda" size="lg">
         {errorForm && (
-          <div className="mb-4 rounded-xl bg-red-50 border border-red-200 px-4 py-3">
-            <p className="text-sm text-red-700">{errorForm}</p>
+          <div className="mb-4 rounded-lg bg-danger-50 border border-danger-100 px-3 py-2.5">
+            <p className="text-sm text-danger-700">{errorForm}</p>
           </div>
         )}
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">

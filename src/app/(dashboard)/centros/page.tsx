@@ -194,8 +194,8 @@ export default function CentrosPage() {
         size="lg"
       >
         {errorForm && (
-          <div className="mb-4 rounded-xl bg-red-50 border border-red-200 px-4 py-3">
-            <p className="text-sm text-red-700">{errorForm}</p>
+          <div className="mb-4 rounded-lg bg-danger-50 border border-danger-100 px-3 py-2.5">
+            <p className="text-sm text-danger-700">{errorForm}</p>
           </div>
         )}
         <FormCentro

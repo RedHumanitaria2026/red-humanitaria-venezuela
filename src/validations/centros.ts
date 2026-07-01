@@ -18,11 +18,13 @@ export const centroSchema = z.object({
     .min(0)
     .max(100000)
     .default(0),
-  estado: z.enum(["activo", "saturado", "necesita_apoyo", "cerrado_temporalmente"]).default("activo"),
+  estado: z
+    .enum(["activo", "saturado", "necesita_apoyo", "cerrado_temporalmente"])
+    .default("activo"),
   observaciones: z.string().max(1000).optional(),
   latitud: z.number().min(-90).max(90).optional().nullable(),
   longitud: z.number().min(-180).max(180).optional().nullable(),
-  ubicacion_url: z.string().url("URL inválida").max(500).optional().nullable(),
+  ubicacion_url: z.string().url().optional(),
 });
 
 export type CentroFormValues = z.infer<typeof centroSchema>;

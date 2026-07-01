@@ -89,7 +89,7 @@ export default function AlertasPage() {
             <button
               key={p}
               onClick={() => setFiltroPrioridad(p)}
-              className={`px-3 py-1.5 rounded-xl text-sm font-medium transition-colors ${
+              className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
                 filtroPrioridad === p
                   ? "bg-primary-100 text-primary-700"
                   : "bg-white border border-gray-200 text-gray-600 hover:bg-gray-50"
@@ -101,9 +101,9 @@ export default function AlertasPage() {
         </div>
         <button
           onClick={() => setMostrarResueltas(!mostrarResueltas)}
-          className={`px-3 py-1.5 rounded-xl text-sm font-medium transition-colors ${
+          className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
             mostrarResueltas
-              ? "bg-green-100 text-green-700"
+              ? "bg-success-100 text-success-700"
               : "bg-white border border-gray-200 text-gray-600 hover:bg-gray-50"
           }`}
         >
@@ -130,22 +130,22 @@ export default function AlertasPage() {
             return (
               <div
                 key={alerta.id}
-                className={`bg-white rounded-2xl border shadow-sm p-5 flex items-start gap-4 ${
+                className={`bg-white rounded-lg border shadow-sm p-5 flex items-start gap-4 ${
                   alerta.resuelta ? "opacity-60" : ""
                 } ${
                   alerta.prioridad === "critica" && !alerta.resuelta
-                    ? "border-red-200"
+                    ? "border-danger-200"
                     : "border-gray-100"
                 }`}
               >
                 <div
-                  className={`p-2 rounded-xl shrink-0 ${
+                  className={`p-2 rounded-lg shrink-0 ${
                     alerta.resuelta
                       ? "bg-gray-100"
                       : alerta.prioridad === "critica"
-                      ? "bg-red-100"
+                      ? "bg-danger-100"
                       : alerta.prioridad === "alta"
-                      ? "bg-orange-100"
+                      ? "bg-warning-100"
                       : "bg-blue-100"
                   }`}
                 >
@@ -154,10 +154,10 @@ export default function AlertasPage() {
                       alerta.resuelta
                         ? "text-gray-400"
                         : alerta.prioridad === "critica"
-                        ? "text-red-500"
+                        ? "text-danger-500"
                         : alerta.prioridad === "alta"
-                        ? "text-orange-500"
-                        : "text-blue-500"
+                        ? "text-warning-500"
+                        : "text-primary-500"
                     }`}
                   />
                 </div>
@@ -186,7 +186,7 @@ export default function AlertasPage() {
                     variant="ghost"
                     size="sm"
                     onClick={() => resolverAlerta(alerta.id)}
-                    className="shrink-0 text-green-600 hover:bg-green-50"
+                    className="shrink-0 text-success-600 hover:bg-success-50"
                   >
                     <CheckCircle className="h-4 w-4" />
                     Resolver

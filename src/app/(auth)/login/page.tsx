@@ -10,7 +10,6 @@ import { createClient } from "@/lib/supabase/client";
 import { loginSchema, type LoginFormValues } from "@/validations/auth";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
-import { Card } from "@/components/ui/Card";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -52,10 +51,9 @@ export default function LoginPage() {
   }
 
   return (
-    <Card>
-      <h2 className="text-xl font-semibold text-gray-900 mb-6">
-        Iniciar sesion
-      </h2>
+    <div>
+      <h1 className="text-2xl font-bold text-gray-900 mb-1">Bienvenido</h1>
+      <p className="text-sm text-gray-500 mb-7">Ingresa tu email y contraseña para continuar</p>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <Input
@@ -68,7 +66,7 @@ export default function LoginPage() {
         />
 
         <Input
-          label="Contrasena"
+          label="Contraseña"
           type="password"
           placeholder="••••••••"
           leftIcon={<Lock className="h-4 w-4" />}
@@ -77,8 +75,8 @@ export default function LoginPage() {
         />
 
         {errorServidor && (
-          <div className="rounded-xl bg-red-50 border border-red-200 px-4 py-3">
-            <p className="text-sm text-red-700">{errorServidor}</p>
+          <div className="rounded-lg bg-danger-50 border border-danger-100 px-3 py-2.5">
+            <p className="text-sm text-danger-700">{errorServidor}</p>
           </div>
         )}
 
@@ -87,20 +85,21 @@ export default function LoginPage() {
           fullWidth
           size="lg"
           loading={isSubmitting}
+          className="mt-2"
         >
           Ingresar
         </Button>
       </form>
 
       <p className="text-center text-sm text-gray-500 mt-6">
-        No tenes cuenta?{" "}
+        ¿No tenés cuenta?{" "}
         <Link
           href="/registro"
           className="font-medium text-primary-600 hover:text-primary-700"
-        >
+       >
           Registrarse
         </Link>
       </p>
-    </Card>
+    </div>
   );
 }

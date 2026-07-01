@@ -197,7 +197,7 @@ export default function InventarioPage() {
       </div>
 
       {criticos.length > 0 && (
-        <Card className="border-red-200 bg-red-50">
+        <Card className="border-danger-200 bg-danger-50">
           <CardHeader
             title={`⚠️ ${criticos.length} item${criticos.length !== 1 ? "s" : ""} en estado crítico`}
             subtitle="Stocks por debajo del 20% de lo necesario"
@@ -206,7 +206,7 @@ export default function InventarioPage() {
             {criticos.slice(0, 4).map((item) => (
               <div
                 key={item.id}
-                className="flex items-center justify-between gap-3 bg-white rounded-xl p-3 border border-red-100"
+                className="flex items-center justify-between gap-3 bg-white rounded-lg p-3 border border-danger-100"
               >
                 <div className="min-w-0">
                   <p className="text-sm font-medium text-gray-900 truncate">
@@ -264,7 +264,7 @@ export default function InventarioPage() {
           action={{ label: "Agregar item", onClick: abrirCrear }}
         />
       ) : (
-        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+        <div className="bg-white rounded-lg border border-gray-200 shadow-card overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full min-w-[640px]">
               <thead>
@@ -348,7 +348,7 @@ export default function InventarioPage() {
                             variant="ghost"
                             size="sm"
                             onClick={() => setItemEliminando(item)}
-                            className="text-red-500 hover:text-red-600 hover:bg-red-50"
+                            className="text-danger-500 hover:text-danger-600 hover:bg-danger-50"
                           >
                             Eliminar
                           </Button>
@@ -370,8 +370,8 @@ export default function InventarioPage() {
         size="lg"
       >
         {errorForm && (
-          <div className="mb-4 rounded-xl bg-red-50 border border-red-200 px-4 py-3">
-            <p className="text-sm text-red-700">{errorForm}</p>
+          <div className="mb-4 rounded-lg bg-danger-50 border border-danger-100 px-3 py-2.5">
+            <p className="text-sm text-danger-700">{errorForm}</p>
           </div>
         )}
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">

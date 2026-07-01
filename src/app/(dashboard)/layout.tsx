@@ -55,7 +55,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
 
   if (cargando) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: "#f4f6f9" }}>
         <PageLoader />
       </div>
     );
@@ -64,7 +64,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
   if (!perfil) return null;
 
   return (
-    <div className="flex h-screen overflow-hidden bg-gray-50">
+    <div className="flex h-screen overflow-hidden" style={{ backgroundColor: "#f4f6f9" }}>
       <div className="hidden lg:flex shrink-0">
         <Sidebar rolUsuario={perfil.rol} />
       </div>
@@ -90,7 +90,9 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
           perfil={perfil}
           onMenuToggle={() => setMenuMovilAbierto((prev) => !prev)}
         />
-        <main className="flex-1 overflow-y-auto p-4 sm:p-6">{children}</main>
+        <main className="flex-1 overflow-y-auto p-4 sm:p-6">
+          {children}
+        </main>
       </div>
     </div>
   );

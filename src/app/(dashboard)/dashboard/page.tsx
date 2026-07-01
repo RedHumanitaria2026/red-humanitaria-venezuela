@@ -39,10 +39,10 @@ import type {
 } from "@/types";
 
 const accionesRapidas = [
-  { href: "/solicitudes", label: "Pedir ayuda", icon: HeartHandshake, color: "text-red-600 bg-red-50 hover:bg-red-100" },
-  { href: "/centros", label: "Centros", icon: Building2, color: "text-blue-600 bg-blue-50 hover:bg-blue-100" },
-  { href: "/alojamientos", label: "Alojamiento", icon: Home, color: "text-green-600 bg-green-50 hover:bg-green-100" },
-  { href: "/donaciones", label: "Donaciones", icon: Gift, color: "text-purple-600 bg-purple-50 hover:bg-purple-100" },
+  { href: "/solicitudes", label: "Pedir ayuda", icon: HeartHandshake, color: "text-danger-600 bg-danger-50 hover:bg-danger-100" },
+  { href: "/centros", label: "Centros", icon: Building2, color: "text-primary-600 bg-primary-50 hover:bg-primary-100" },
+  { href: "/alojamientos", label: "Alojamiento", icon: Home, color: "text-success-600 bg-success-50 hover:bg-success-100" },
+  { href: "/donaciones", label: "Donaciones", icon: Gift, color: "text-warning-600 bg-warning-50 hover:bg-warning-100" },
 ];
 
 export default function DashboardPage() {
@@ -76,8 +76,8 @@ export default function DashboardPage() {
   return (
     <div className="space-y-5 max-w-7xl mx-auto">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">Panel principal</h1>
-        <p className="text-gray-500 mt-0.5">Resumen general de la situación actual</p>
+        <h1 className="text-xl font-bold text-gray-900">Panel principal</h1>
+        <p className="text-sm text-gray-500 mt-0.5">Resumen general de la situación actual</p>
       </div>
 
       <div className="grid grid-cols-4 gap-3">
@@ -85,9 +85,9 @@ export default function DashboardPage() {
           <Link
             key={accion.href}
             href={accion.href}
-            className={`flex flex-col items-center justify-center gap-2 p-3 sm:p-4 rounded-2xl transition-colors ${accion.color}`}
+            className={`flex flex-col items-center justify-center gap-2 p-3 sm:p-4 rounded-lg transition-colors ${accion.color}`}
           >
-            <accion.icon className="h-6 w-6 sm:h-7 sm:w-7" />
+            <accion.icon className="h-5 w-5 sm:h-6 sm:w-6" />
             <span className="text-xs sm:text-sm font-semibold text-center leading-tight">{accion.label}</span>
           </Link>
         ))}
@@ -161,9 +161,9 @@ export default function DashboardPage() {
             {alertas.slice(0, 5).map((alerta) => (
               <div
                 key={alerta.id}
-                className="flex items-start gap-3 p-3 rounded-xl bg-red-50 border border-red-100"
+                className="flex items-start gap-3 p-3 rounded-lg bg-danger-50 border border-danger-100"
               >
-                <Bell className="h-4 w-4 text-red-500 shrink-0 mt-0.5" />
+                <Bell className="h-4 w-4 text-danger-500 shrink-0 mt-0.5" />
                 <div className="min-w-0 flex-1">
                   <p className="text-sm font-medium text-gray-900 truncate">{alerta.titulo}</p>
                   <p className="text-xs text-gray-500 mt-0.5 line-clamp-1">{alerta.descripcion}</p>
@@ -178,20 +178,20 @@ export default function DashboardPage() {
       {alertas.length === 0 && sugerencias.length === 0 && movimientos.length === 0 && (
         <Card>
           <div className="py-8 text-center">
-            <HeartHandshake className="h-10 w-10 text-gray-300 mx-auto mb-3" />
-            <p className="text-gray-500 font-medium">Todo tranquilo por ahora</p>
-            <p className="text-gray-400 text-sm mt-1">Las alertas y movimientos recientes aparecerán aquí</p>
+            <HeartHandshake className="h-9 w-9 text-gray-300 mx-auto mb-3" />
+            <p className="text-sm text-gray-600 font-medium">Todo tranquilo por ahora</p>
+            <p className="text-xs text-gray-400 mt-1">Las alertas y movimientos recientes aparecerán aquí</p>
             <div className="mt-4 flex flex-col sm:flex-row gap-2 justify-center">
               <Link
                 href="/centros"
-                className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-primary-600 bg-primary-50 hover:bg-primary-100 rounded-xl transition-colors"
+                className="inline-flex items-center gap-2 px-3 py-2 text-sm font-medium text-primary-600 bg-primary-50 hover:bg-primary-100 rounded-lg transition-colors"
               >
                 <Plus className="h-4 w-4" />
                 Agregar primer centro
               </Link>
               <Link
                 href="/solicitudes"
-                className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-red-600 bg-red-50 hover:bg-red-100 rounded-xl transition-colors"
+                className="inline-flex items-center gap-2 px-3 py-2 text-sm font-medium text-danger-600 bg-danger-50 hover:bg-danger-100 rounded-lg transition-colors"
               >
                 <HeartHandshake className="h-4 w-4" />
                 Registrar solicitud
@@ -207,11 +207,11 @@ export default function DashboardPage() {
             title="Redistribución sugerida"
             subtitle="Oportunidades de optimización detectadas"
           />
-          <div className="space-y-3">
+          <div className="space-y-2">
             {sugerencias.map((sug) => (
-              <div key={sug.id} className="p-3 rounded-xl bg-blue-50 border border-blue-100">
+              <div key={sug.id} className="p-3 rounded-lg bg-primary-50 border border-primary-100">
                 <div className="flex items-center gap-2 mb-1">
-                  <Package className="h-4 w-4 text-blue-500 shrink-0" />
+                  <Package className="h-4 w-4 text-primary-500 shrink-0" />
                   <span className="text-sm font-medium text-gray-900 truncate">
                     {sug.nombre_item} — {sug.cantidad_sugerida} {sug.unidad}
                   </span>
@@ -230,10 +230,10 @@ export default function DashboardPage() {
       {movimientos.length > 0 && (
         <Card>
           <CardHeader title="Últimos movimientos" />
-          <div className="divide-y divide-gray-50">
+          <div className="divide-y divide-gray-100">
             {movimientos.map((mov) => (
               <div key={mov.id} className="flex items-center gap-3 py-3 first:pt-0 last:pb-0">
-                <div className="p-2 rounded-xl bg-gray-100 shrink-0">
+                <div className="p-2 rounded-lg bg-gray-100 shrink-0">
                   {mov.tipo_movimiento === "solicitud" ? (
                     <HeartHandshake className="h-4 w-4 text-gray-500" />
                   ) : (
@@ -275,7 +275,7 @@ export default function DashboardPage() {
                   <p className="text-xs text-gray-400 mt-1">{formatearTiempoRelativo(mov.creado_en)}</p>
                 </div>
               </div>
-            ))}
+                  ))}
           </div>
         </Card>
       )}
