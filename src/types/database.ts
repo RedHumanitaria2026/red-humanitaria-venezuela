@@ -547,6 +547,52 @@ export interface Database {
           }
         ];
       };
+      busquedas: {
+        Row: {
+          id: string;
+          creador_id: string;
+          nombre: string;
+          apellido: string;
+          edad: number | null;
+          altura_cm: number | null;
+          sexo: string | null;
+          ciudad: string | null;
+          ultima_ubicacion: string | null;
+          telefono_contacto: string | null;
+          informacion_adicional: string | null;
+          foto_url: string | null;
+          estado: string;
+          activa: boolean;
+          creado_en: string;
+          actualizado_en: string;
+        };
+        Insert: {
+          id?: string;
+          creador_id: string;
+          nombre: string;
+          apellido: string;
+          edad?: number | null;
+          altura_cm?: number | null;
+          sexo?: string | null;
+          ciudad?: string | null;
+          ultima_ubicacion?: string | null;
+          telefono_contacto?: string | null;
+          informacion_adicional?: string | null;
+          foto_url?: string | null;
+          estado?: string;
+          activa?: boolean;
+          actualizado_en?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "busquedas_creador_id_fkey";
+            columns: ["creador_id"];
+            isOneToOne: false;
+            referencedRelation: "perfiles";
+            referencedColumns: ["id"];
+          }
+        ];
+      };
       publicaciones: {
         Row: {
           id: string;

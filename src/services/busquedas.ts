@@ -1,12 +1,9 @@
 import { createClient } from "@/lib/supabase/client";
-import type { Busqueda, EstadoBusqueda, FiltrosBusquedas } from "@/types";
-
-function db() {
-  return createClient() as unknown as ReturnType<typeof import("@supabase/supabase-js").createClient>;
-}
+import type { Busqueda, FiltrosBusquedas } from "@/types";
 
 export async function obtenerBusquedas(filtros?: FiltrosBusquedas): Promise<Busqueda[]> {
-  let query = (db() as any)
+  const supabase = createClient();
+  let query = supabase
     .from("busquedas")
     .select("*, creador:perfiles(id, nombre_completo, alias, rol)")
     .eq("activa", true)
@@ -25,37 +22,40 @@ export async function obtenerBusquedas(filtros?: FiltrosBusquedas): Promise<Busq
   }
 
   const { data } = await query;
-  return (data as Busqueda[]) || [];
+  return (data as unknown as Busqueda[]) || [];
 }
 
 export async function obtenerBusquedaPorId(id: string): Promise<Busqueda | null> {
-  const { data } = await (db() as any)
+  const supabase = createClient();
+  const { data } = await supabase
     .from("busquedas")
     .select("*, creador:perfiles(id, nombre_completo, alias, rol)")
     .eq("id", id)
     .eq("activa", true)
     .single();
-  return (data as Busqueda) || null;
+  return (data as unknown as Busqueda) || null;
 }
 
 export async function crearBusqueda(
   creadorId: string,
   datos: Omit<Busqueda, "id" | "creador_id" | "creado_en" | "actualizado_en" | "activa" | "creador">
 ): Promise<{ error: string | null; id?: string }> {
-  const { data, error } = await (db() as any)
+  const supabase = createClient();
+  const { data, error } = await supabase
     .from("busquedas")
     .insert({ ...datos, creador_id: creadorId })
     .select("id")
     .single();
   if (error) return { error: error.message };
-  return { error: null, id: data?.id };
+  return { error: null, id: (data as { id: string } | null)?.id };
 }
 
 export async function actualizarBusqueda(
   id: string,
   datos: Partial<Omit<Busqueda, "id" | "creador_id" | "creado_en" | "actualizado_en" | "creador">>
 ): Promise<{ error: string | null }> {
-  const { error } = await (db() as any)
+  const supabase = createClient();
+  const { error } = await supabase
     .from("busquedas")
     .update(datos)
     .eq("id", id);
@@ -68,7 +68,8 @@ export async function marcarEncontrado(id: string): Promise<{ error: string | nu
 }
 
 export async function eliminarBusqueda(id: string): Promise<{ error: string | null }> {
-  const { error } = await (db() as any)
+  const supabase = createClient();
+  const { error } = await supabase
     .from("busquedas")
     .update({ activa: false })
     .eq("id", id);
