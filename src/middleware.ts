@@ -38,7 +38,9 @@ export async function middleware(request: NextRequest) {
     (ruta) => pathname === ruta || pathname.startsWith(ruta + "/")
   );
 
-  if (!user && !esRutaPublica && pathname !== "/") {
+  const esRutaApi = pathname.startsWith("/api/");
+
+  if (!user && !esRutaPublica && !esRutaApi && pathname !== "/") {
     const url = request.nextUrl.clone();
     url.pathname = "/login";
     return NextResponse.redirect(url);
