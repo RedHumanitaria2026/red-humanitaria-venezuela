@@ -583,6 +583,21 @@ export interface Database {
           activa?: boolean;
           actualizado_en?: string;
         };
+        Update: {
+          nombre?: string;
+          apellido?: string;
+          edad?: number | null;
+          altura_cm?: number | null;
+          sexo?: string | null;
+          ciudad?: string | null;
+          ultima_ubicacion?: string | null;
+          telefono_contacto?: string | null;
+          informacion_adicional?: string | null;
+          foto_url?: string | null;
+          estado?: string;
+          activa?: boolean;
+          actualizado_en?: string;
+        };
         Relationships: [
           {
             foreignKeyName: "busquedas_creador_id_fkey";
