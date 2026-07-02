@@ -269,6 +269,35 @@ export interface Publicacion {
   autor?: PerfilUsuario;
 }
 
+export type EstadoBusqueda = "en_busqueda" | "encontrado";
+export type SexoBusqueda = "masculino" | "femenino" | "otro";
+
+export interface Busqueda {
+  id: string;
+  creador_id: string;
+  nombre: string;
+  apellido: string;
+  edad: number | null;
+  altura_cm: number | null;
+  sexo: SexoBusqueda | null;
+  ciudad: string | null;
+  ultima_ubicacion: string | null;
+  telefono_contacto: string | null;
+  informacion_adicional: string | null;
+  foto_url: string | null;
+  estado: EstadoBusqueda;
+  activa: boolean;
+  creado_en: string;
+  actualizado_en: string;
+  creador?: PerfilUsuario;
+}
+
+export interface FiltrosBusquedas {
+  nombre?: string;
+  ciudad?: string;
+  estado?: EstadoBusqueda;
+}
+
 export interface EstadisticasDashboard {
   centros_activos: number;
   total_voluntarios: number;

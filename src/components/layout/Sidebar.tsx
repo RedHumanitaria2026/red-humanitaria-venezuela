@@ -14,6 +14,7 @@ import {
   X,
   Heart,
   MessageSquare,
+  UserSearch,
 } from "lucide-react";
 import { cn } from "@/utils/cn";
 import type { UserRole } from "@/types";
@@ -72,6 +73,12 @@ const navItems: NavItem[] = [
     href: "/comunidad",
     label: "Comunidad",
     icon: MessageSquare,
+    roles: ["administrador", "responsable_centro", "voluntario", "donante", "anfitriion"],
+  },
+  {
+    href: "/busquedas",
+    label: "En búsqueda",
+    icon: UserSearch,
     roles: ["administrador", "responsable_centro", "voluntario", "donante", "anfitriion"],
   },
   {
@@ -148,7 +155,7 @@ export function Sidebar({ rolUsuario, onClose, mobile }: SidebarProps) {
             </Link>
           );
         })}
-      </nav>
+            </nav>
 
       <div className="px-3 py-4 border-t border-white/10">
         <p className="text-xs text-white/30 text-center">Red Humanitaria Venezuela</p>
