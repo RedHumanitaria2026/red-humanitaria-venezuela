@@ -242,6 +242,7 @@ export interface Database {
           latitud: number | null;
           longitud: number | null;
           ubicacion_url: string | null;
+          telefono_contacto: string | null;
           creado_en: string;
           actualizado_en: string;
         };
@@ -262,6 +263,7 @@ export interface Database {
           latitud?: number | null;
           longitud?: number | null;
           ubicacion_url?: string | null;
+          telefono_contacto?: string | null;
           creado_en?: string;
           actualizado_en?: string;
         };
@@ -280,6 +282,7 @@ export interface Database {
           latitud?: number | null;
           longitud?: number | null;
           ubicacion_url?: string | null;
+          telefono_contacto?: string | null;
           actualizado_en?: string;
         };
         Relationships: [
@@ -540,6 +543,50 @@ export interface Database {
             columns: ["centro_destino_id"];
             isOneToOne: false;
             referencedRelation: "centros";
+            referencedColumns: ["id"];
+          }
+        ];
+      };
+      publicaciones: {
+        Row: {
+          id: string;
+          autor_id: string;
+          titulo: string;
+          contenido: string;
+          categoria: string;
+          ciudad: string | null;
+          telefono_contacto: string | null;
+          activa: boolean;
+          creado_en: string;
+          actualizado_en: string;
+        };
+        Insert: {
+          id?: string;
+          autor_id: string;
+          titulo: string;
+          contenido: string;
+          categoria?: string;
+          ciudad?: string | null;
+          telefono_contacto?: string | null;
+          activa?: boolean;
+          creado_en?: string;
+          actualizado_en?: string;
+        };
+        Update: {
+          titulo?: string;
+          contenido?: string;
+          categoria?: string;
+          ciudad?: string | null;
+          telefono_contacto?: string | null;
+          activa?: boolean;
+          actualizado_en?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "publicaciones_autor_id_fkey";
+            columns: ["autor_id"];
+            isOneToOne: false;
+            referencedRelation: "perfiles";
             referencedColumns: ["id"];
           }
         ];

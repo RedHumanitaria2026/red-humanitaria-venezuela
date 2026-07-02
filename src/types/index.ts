@@ -162,6 +162,7 @@ export interface Alojamiento {
   latitud: number | null;
   longitud: number | null;
   ubicacion_url: string | null;
+  telefono_contacto: string | null;
   creado_en: string;
   actualizado_en: string;
   anfitriion?: PerfilUsuario;
@@ -244,6 +245,28 @@ export interface SugerenciaRedistribucion {
   creado_en: string;
   centro_origen?: Centro;
   centro_destino?: Centro;
+}
+
+export type CategoriaPublicacion =
+  | "alerta"
+  | "recurso"
+  | "busqueda"
+  | "oferta"
+  | "informacion"
+  | "otro";
+
+export interface Publicacion {
+  id: string;
+  autor_id: string;
+  titulo: string;
+  contenido: string;
+  categoria: CategoriaPublicacion;
+  ciudad: string | null;
+  telefono_contacto: string | null;
+  activa: boolean;
+  creado_en: string;
+  actualizado_en: string;
+  autor?: PerfilUsuario;
 }
 
 export interface EstadisticasDashboard {

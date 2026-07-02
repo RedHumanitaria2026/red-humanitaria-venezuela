@@ -164,6 +164,7 @@ create table public.alojamientos (
   latitud decimal(10, 8),
   longitud decimal(11, 8),
   ubicacion_url text,
+  telefono_contacto text,
   creado_en timestamptz not null default now(),
   actualizado_en timestamptz not null default now()
 );
@@ -238,6 +239,32 @@ create table public.sugerencias_redistribucion (
   estado public.estado_redistribucion not null default 'pendiente',
   creado_en timestamptz not null default now()
 );
+
+create type public.categoria_publicacion as enum (
+  'alerta',
+  'recurso',
+  'busqueda',
+  'oferta',
+  'informacion',
+  'otro'
+);
+
+create table public.publicaciones (
+  id uuid primary key default uuid_generate_v4(),
+  autor_id uuid references public.perfiles(id) on delete cascade not null,
+  titulo text not null,
+  contenido text not null,
+  categoria public.categoria_publicacion not null default 'informacion',
+  ciudad text,
+  telefono_contacto text,
+  activa boolean not null default true,
+  creado_en timestamptz not null default now(),
+  actualizado_en timestamptz not null default now()
+);
+
+create unique index idx_publicaciones_un_activa_por_autor
+  on public.publicaciones (autor_id)
+  where (activa = true);
 
 create or replace function public.actualizar_timestamp()
 returns trigger

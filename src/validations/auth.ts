@@ -32,6 +32,7 @@ export const registroSchema = z
     ciudad: z.string().max(100).optional(),
     telefono: z.string().max(20).optional(),
     alias: z.string().max(50).optional(),
+    clave_admin: z.string().max(100).optional(),
   })
   .refine((data) => data.password === data.confirmar_password, {
     message: "Las contraseñas no coinciden",

@@ -34,8 +34,9 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# temp build scripts
-run_build.bat
+# OS temp files
+.fuse_hidden*
+.bat
 build_output.txt
 commit_security2.bat
 security_commit.ps1

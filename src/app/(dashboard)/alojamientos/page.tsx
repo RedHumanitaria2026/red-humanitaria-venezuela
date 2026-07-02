@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Home, Plus, Users, Droplets, Zap, Bath, PawPrint, Baby, Search, ExternalLink, Share2 } from "lucide-react";
+import { Home, Plus, Users, Droplets, Zap, Bath, PawPrint, Baby, Search, ExternalLink, Share2, Phone } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -30,6 +30,8 @@ import {
 } from "@/utils/formatters";
 import type { Alojamiento, FamiliaAlojamiento, EstadoAlojamiento } from "@/types";
 
+const TELEFONO_REGEX = /^[+\d\s\-().]{7,20}$/;
+
 const alojamientoSchema = z.object({
   tipo: z.enum(["patio", "habitacion", "casa", "garaje", "galpon", "espacio_comunitario", "otro"]),
   ciudad: z.string().min(2, "La ciudad es requerida"),
@@ -45,6 +47,10 @@ const alojamientoSchema = z.object({
   latitud: z.number().optional().nullable(),
   longitud: z.number().optional().nullable(),
   ubicacion_url: z.string().optional().nullable(),
+  telefono_contacto: z
+    .string()
+    .min(7, "Ingresa un teléfono válido")
+    .regex(TELEFONO_REGEX, "Formato inválido. Ej: +58 412 0000000"),
 });
 
 type AlojamientoFormValues = z.infer<typeof alojamientoSchema>;
@@ -86,6 +92,16 @@ const colorEstado: Record<EstadoAlojamiento, "success" | "warning" | "danger"> =
   no_disponible: "danger",
 };
 
+function limpiarTelefono(tel: string): string {
+  return tel.replace(/[\s\-().]/g, "");
+}
+
+function telefonoValido(tel: string | null | undefined): boolean {
+  if (!tel) return false;
+  const limpio = limpiarTelefono(tel);
+  return /^\+?\d{7,15}$/.test(limpio);
+}
+
 function generarMensajeAlojamiento(aloj: Alojamiento): string {
   const tipo = etiquetaTipo[aloj.tipo] || aloj.tipo;
   const estado = etiquetaEstadoAlojamiento(aloj.estado);
@@ -101,10 +117,17 @@ function generarMensajeAlojamiento(aloj: Alojamiento): string {
     "Capacidad: " + capacidad + (capacidad !== 1 ? " personas" : " persona"),
     "Acepta ninos: " + ninos + " | Mascotas: " + mascotas,
   ];
+  if (aloj.telefono_contacto) lineas.push("Contacto: " + aloj.telefono_contacto);
   if (aloj.observaciones) lineas.push(aloj.observaciones);
   if (aloj.ubicacion_url) lineas.push("Como llegar: " + aloj.ubicacion_url);
   lineas.push("", "Compartido desde Red Humanitaria");
   return encodeURIComponent(lineas.join(String.fromCharCode(10)));
+}
+
+function urlWhatsAppContacto(telefono: string): string {
+  const limpio = limpiarTelefono(telefono);
+  const numero = limpio.startsWith("+") ? limpio.slice(1) : limpio;
+  return `https://wa.me/${numero}`;
 }
 
 export default function AlojamientosPage() {
@@ -132,6 +155,7 @@ export default function AlojamientosPage() {
       latitud: null,
       longitud: null,
       ubicacion_url: null,
+      telefono_contacto: "",
     },
   });
 
@@ -218,6 +242,7 @@ export default function AlojamientosPage() {
       latitud: null,
       longitud: null,
       ubicacion_url: null,
+      telefono_contacto: "",
     });
     setErrorForm(null);
     setModalAlojamiento(true);
@@ -348,6 +373,17 @@ export default function AlojamientosPage() {
               </div>
 
               <div className="flex flex-wrap gap-3">
+                {telefonoValido(aloj.telefono_contacto) && (
+                  <a
+                    href={urlWhatsAppContacto(aloj.telefono_contacto!)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-1.5 text-sm text-success-600 hover:text-success-700 font-medium"
+                  >
+                    <Phone className="h-3.5 w-3.5" />
+                    Contactar por WhatsApp
+                  </a>
+                )}
                 {aloj.ubicacion_url && (
                   <a
                     href={aloj.ubicacion_url}
@@ -363,7 +399,7 @@ export default function AlojamientosPage() {
                   href={"https://wa.me/?text=" + generarMensajeAlojamiento(aloj)}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-1.5 text-sm text-success-600 hover:text-success-700 font-medium"
+                  className="flex items-center gap-1.5 text-sm text-gray-500 hover:text-gray-700 font-medium"
                 >
                   <Share2 className="h-3.5 w-3.5" />
                   Compartir
@@ -425,6 +461,20 @@ export default function AlojamientosPage() {
               placeholder="Las Mercedes"
               {...formAlojamiento.register("zona")}
             />
+          </div>
+          <div>
+            <Input
+              label="Teléfono de contacto"
+              type="tel"
+              placeholder="+58 412 0000000"
+              leftIcon={<Phone className="h-4 w-4" />}
+              error={formAlojamiento.formState.errors.telefono_contacto?.message}
+              required
+              {...formAlojamiento.register("telefono_contacto")}
+            />
+            <p className="mt-1 text-xs text-gray-500">
+              Este teléfono será visible para personas que necesiten alojamiento.
+            </p>
           </div>
           <div className="space-y-2">
             <p className="text-sm font-medium text-gray-700">Servicios disponibles</p>

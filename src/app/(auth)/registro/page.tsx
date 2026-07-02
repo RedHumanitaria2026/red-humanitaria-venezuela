@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Mail, Lock, User, Phone, MapPin } from "lucide-react";
+import { Mail, Lock, User, Phone, MapPin, KeyRound } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { registroSchema, type RegistroFormValues } from "@/validations/auth";
 import { Button } from "@/components/ui/Button";
@@ -17,7 +17,7 @@ const opcionesRol = [
   { value: "donante", label: "Quiero donar" },
   { value: "anfitriion", label: "Ofrezco alojamiento" },
   { value: "responsable_centro", label: "Responsable de centro" },
-  { value: "administrador", label: "Administrador" },
+  { value: "administrador", label: "Admin centro" },
 ];
 
 async function asegurarPerfil(
@@ -53,6 +53,21 @@ async function asegurarPerfil(
   }
 }
 
+async function verificarClaveAdmin(clave: string): Promise<boolean> {
+  try {
+    const res = await fetch("/api/verificar-clave-admin", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ clave }),
+    });
+    if (!res.ok) return false;
+    const json = await res.json();
+    return json.valida === true;
+  } catch {
+    return false;
+  }
+}
+
 export default function RegistroPage() {
   const router = useRouter();
   const [errorServidor, setErrorServidor] = useState<string | null>(null);
@@ -61,14 +76,27 @@ export default function RegistroPage() {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors, isSubmitting },
   } = useForm<RegistroFormValues>({
     resolver: zodResolver(registroSchema),
     defaultValues: { rol: "voluntario" },
   });
 
+  const rolSeleccionado = watch("rol");
+  const esAdminCentro = rolSeleccionado === "administrador";
+
   async function onSubmit(values: RegistroFormValues) {
     setErrorServidor(null);
+
+    if (esAdminCentro) {
+      const claveOk = await verificarClaveAdmin(values.clave_admin ?? "");
+      if (!claveOk) {
+        setErrorServidor("La clave de Admin centro es incorrecta.");
+        return;
+      }
+    }
+
     const supabase = createClient();
 
     const { data, error } = await supabase.auth.signUp({
@@ -89,12 +117,12 @@ export default function RegistroPage() {
         msg.toLowerCase().includes("already registered") ||
         msg.toLowerCase().includes("already been registered")
       ) {
-        setErrorServidor("Este email ya esta registrado. Inicia sesion.");
+        setErrorServidor("Este email ya está registrado. Iniciá sesión.");
       } else if (msg.toLowerCase().includes("password")) {
-        setErrorServidor("La contrasena no cumple los requisitos minimos.");
+        setErrorServidor("La contraseña no cumple los requisitos mínimos.");
       } else if (msg === "" || msg === "{}") {
         setErrorServidor(
-          "Hubo un error interno. Por favor intenta de nuevo en unos segundos."
+          "Hubo un error interno. Por favor intentá de nuevo en unos segundos."
         );
       } else {
         setErrorServidor("Error al crear la cuenta: " + msg);
@@ -130,13 +158,13 @@ export default function RegistroPage() {
           Cuenta creada
         </h2>
         <p className="text-sm text-gray-500 mb-2">
-          Revisa tu email para confirmar tu cuenta.
+          Revisá tu email para confirmar tu cuenta.
         </p>
         <p className="text-xs text-gray-400 mb-6">
-          Si no ves el email, revisa la carpeta de spam.
+          Si no ves el email, revisá la carpeta de spam.
         </p>
         <Link href="/login">
-          <Button fullWidth>Ir al inicio de sesion</Button>
+          <Button fullWidth>Ir al inicio de sesión</Button>
         </Link>
       </div>
     );
@@ -151,7 +179,7 @@ export default function RegistroPage() {
         <Input
           label="Nombre completo"
           type="text"
-          placeholder="Juan Perez"
+          placeholder="Juan Pérez"
           leftIcon={<User className="h-4 w-4" />}
           error={errors.nombre_completo?.message}
           required
@@ -165,6 +193,23 @@ export default function RegistroPage() {
           required
           {...register("rol")}
         />
+
+        {esAdminCentro && (
+          <div>
+            <Input
+              label="Clave de acceso"
+              type="password"
+              placeholder="Ingresá la clave de Admin centro"
+              leftIcon={<KeyRound className="h-4 w-4" />}
+              error={errors.clave_admin?.message}
+              required
+              {...register("clave_admin")}
+            />
+            <p className="mt-1 text-xs text-gray-500">
+              Se requiere una clave para registrarse como Admin centro.
+            </p>
+          </div>
+        )}
 
         <Input
           label="Email"
@@ -186,7 +231,7 @@ export default function RegistroPage() {
         />
 
         <Input
-          label="Telefono"
+          label="Teléfono"
           type="tel"
           placeholder="+58 412 0000000"
           leftIcon={<Phone className="h-4 w-4" />}
@@ -195,9 +240,9 @@ export default function RegistroPage() {
         />
 
         <Input
-          label="Contrasena"
+          label="Contraseña"
           type="password"
-          placeholder="Minimo 8 caracteres"
+          placeholder="Mínimo 8 caracteres"
           leftIcon={<Lock className="h-4 w-4" />}
           error={errors.password?.message}
           required
@@ -205,9 +250,9 @@ export default function RegistroPage() {
         />
 
         <Input
-          label="Confirmar contrasena"
+          label="Confirmar contraseña"
           type="password"
-          placeholder="Repeti tu contrasena"
+          placeholder="Repetí tu contraseña"
           leftIcon={<Lock className="h-4 w-4" />}
           error={errors.confirmar_password?.message}
           required
