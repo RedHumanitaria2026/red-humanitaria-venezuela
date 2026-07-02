@@ -26,7 +26,7 @@ export const registroSchema = z
       .max(128),
     confirmar_password: z.string().max(128),
     rol: z.enum(
-      ["administrador", "responsable_centro", "voluntario", "donante", "anfitriion"],
+      ["responsable_centro", "voluntario", "donante", "anfitriion"],
       { required_error: "Seleccioná un rol" }
     ),
     ciudad: z.string().max(100).optional(),

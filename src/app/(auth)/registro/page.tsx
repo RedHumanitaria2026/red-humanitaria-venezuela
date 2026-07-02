@@ -16,8 +16,7 @@ const opcionesRol = [
   { value: "voluntario", label: "Voluntario/a" },
   { value: "donante", label: "Quiero donar" },
   { value: "anfitriion", label: "Ofrezco alojamiento" },
-  { value: "responsable_centro", label: "Responsable de centro" },
-  { value: "administrador", label: "Admin centro" },
+  { value: "responsable_centro", label: "Responsable/Admin de centro" },
 ];
 
 async function asegurarPerfil(
@@ -84,15 +83,15 @@ export default function RegistroPage() {
   });
 
   const rolSeleccionado = watch("rol");
-  const esAdminCentro = rolSeleccionado === "administrador";
+  const esResponsableCentro = rolSeleccionado === "responsable_centro";
 
   async function onSubmit(values: RegistroFormValues) {
     setErrorServidor(null);
 
-    if (esAdminCentro) {
+    if (esResponsableCentro) {
       const claveOk = await verificarClaveAdmin(values.clave_admin ?? "");
       if (!claveOk) {
-        setErrorServidor("La clave de Admin centro es incorrecta.");
+        setErrorServidor("La clave de acceso para Responsable/Admin de centro es incorrecta.");
         return;
       }
     }
@@ -194,19 +193,19 @@ export default function RegistroPage() {
           {...register("rol")}
         />
 
-        {esAdminCentro && (
+        {esResponsableCentro && (
           <div>
             <Input
               label="Clave de acceso"
               type="password"
-              placeholder="Ingresá la clave de Admin centro"
+              placeholder="Ingresá la clave de Responsable/Admin de centro"
               leftIcon={<KeyRound className="h-4 w-4" />}
               error={errors.clave_admin?.message}
               required
               {...register("clave_admin")}
             />
             <p className="mt-1 text-xs text-gray-500">
-              Se requiere una clave para registrarse como Admin centro.
+              Se requiere una clave para registrarse como Responsable/Admin de centro.
             </p>
           </div>
         )}
