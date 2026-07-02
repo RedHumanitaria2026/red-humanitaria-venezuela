@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import Image from "next/image";
 import {
   Search, Plus, Phone, MapPin, Calendar, X, Edit2,
   CheckCircle, User, MessageCircle, ChevronDown, ChevronUp,
@@ -170,10 +171,13 @@ function TarjetaBusqueda({
     <div className={`bg-white rounded-xl border shadow-card p-4 space-y-3 ${encontrado ? "border-success-200 opacity-75" : "border-gray-200"}`}>
       <div className="flex gap-3">
         {busqueda.foto_url ? (
-          <img
+          <Image
             src={busqueda.foto_url}
             alt={`${busqueda.nombre} ${busqueda.apellido}`}
+            width={64}
+            height={64}
             className="w-16 h-16 rounded-lg object-cover shrink-0 border border-gray-200"
+            unoptimized
           />
         ) : (
           <div className="w-16 h-16 rounded-lg bg-gray-100 flex items-center justify-center shrink-0">
@@ -565,10 +569,13 @@ export default function BusquedasPage() {
             </label>
             <div className="flex items-center gap-4">
               {fotoPreview ? (
-                <img
+                <Image
                   src={fotoPreview}
                   alt="Vista previa"
+                  width={64}
+                  height={64}
                   className="w-16 h-16 rounded-lg object-cover border border-gray-200"
+                  unoptimized
                 />
               ) : (
                 <div className="w-16 h-16 rounded-lg bg-gray-100 flex items-center justify-center">
